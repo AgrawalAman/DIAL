@@ -133,6 +133,9 @@ def handleMsg(userNumber, queueNumber, text):
         
     app.logger.info(queueNumber)
     queueNumber = queueNumber[:]
+    
+    print("inside handler", file=sys.stderr)
+    print(queues, file=sys.stderr)
 
     if text == "STOP":
         removeUserFromQueue(userNumber, queueNumber)
