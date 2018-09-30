@@ -151,7 +151,7 @@ def handleMsg(userNumber, queueNumber, text):
         relayMsg(userNumber, text, queueNumber)
         return
    
-    elif queues[queuenumber][0] is not None:
+    elif queues[queueNumber][0] is not None:
         print("else", file=sys.stderr)
         print(queues, file=sys.stderr)
         pairedUser = queues[queueNumber][0]
