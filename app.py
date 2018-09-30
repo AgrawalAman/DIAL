@@ -64,7 +64,7 @@ def getAllQueus():
     return queueInfo
 
 def createQueue(number, topic, description):
-    queues[number] = []
+    queues[number] = list()
     db.set('queues', queues)
     queueInfo[number] = {"topic":topic, "description":description, "number" : number}
     db.set('queueInfo', queueInfo)
