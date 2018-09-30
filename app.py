@@ -74,6 +74,7 @@ def createQueue(number, topic, description):
     queues["+13012347438"] = []
     queues = json.dumps(queues)
     db.set('queues', queues)
+    print(json.loads(db.get(queues)), file=sys.stderr)
     queueInfo = db.get('queueInfo')
     queueInfo = json.loads(queueInfo)
     queueInfo[number] = {"topic":topic, "description":description, "number" : number}
