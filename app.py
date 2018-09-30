@@ -2,7 +2,7 @@ from twilio.rest import Client
 from flask import Flask, request, redirect
 from datetime import datetime
 from twilio.twiml.messaging_response import Message, MessagingResponse
-import os, redis, json, sys
+import os, redis, json, sys, pickle
 
 account_sid = 'AC789b798bde070df6992f4f0fba84e89a'
 auth_token = '54c50792327d057f2847007947f11cc3'
@@ -53,20 +53,10 @@ def deletePair(num):
     pairs.pop(num2)
     db.set('pairs', pairs)
     return
-#helper file read write
-def write(text):
-        with open("somethingQueues.txt", 'w') as file:
-                file.write(str(text))
-                                
-def read():
-        with open("somethingQueues.txt", 'r') as file:
-                text = file.read()
-        return text
         
 #queues data structure and handling
-q = {}
-write(q)
-queues = read()
+queues = {}
+pickle.dump( queues, open( "save.p", "wb" ) )
 queueInfo = json.dumps({})
 db.set('queueInfo', queueInfo)
 
@@ -76,9 +66,9 @@ def getAllQueues():
     return queueInfo
 
 def createQueue(number, topic, description):
-    queues = json.loads(read())  
+    queues = pickle.load( open( "save.p", "rb" ) ) 
     queues[number] = []
-    write(queues)
+    pickle.dump( queues, open( "save.p", "wb" ) )
     queueInfo = db.get('queueInfo')
     queueInfo = json.loads(queueInfo)
     queueInfo[number] = {"topic":topic, "description":description, "number" : number}
@@ -87,26 +77,25 @@ def createQueue(number, topic, description):
     return
 
 def deleteQueue(number):
-    queues = read()
+    queues = pickle.load( open( "save.p", "rb" ) )
     queues.pop(number)
-    write(queues)
+    pickle.dump( queues, open( "save.p", "wb" ) )    
     return
 
 def addUserToQueue(userNumber, queueNumber):
     userChannels[userNumber] = queueNumber
-    queues = read()
+    queues = pickle.load( open( "save.p", "rb" ) )
     queues[queueNumber].append(userNumber)
-    write(queues)
-    print(read(queues), file=sys.stderr)
+    pickle.dump( queues, open( "save.p", "wb" ) )    
     print("added" + userNumber, file=sys.stderr)
     return
 
 def removeUserFromQueue(userNumber, queueNumber):
-    queues = read()
-    queues[queueNumber].remove(userNumber)
-    print(queues, file=sys.stderr)
-    write(queues)
-    return
+        queues = pickle.load( open( "save.p", "rb" ) )
+        queues[queueNumber].remove(userNumber)
+        print(queues, file=sys.stderr)
+        pickle.dump( queues, open( "save.p", "wb" ) )
+        return
 
 #relaying and handling stuff
 
@@ -126,7 +115,7 @@ def sendMsg(receiver, text, fromNum):
 def handleMsg(userNumber, queueNumber, text):
     app.logger.info("Msg recd" + text + " " + userNumber)
     
-    queues = read()
+    queues = pickle.load( open( "save.p", "rb" ) )
 
     createQueue("+13012347438", "Test", "Test Channel")
         
