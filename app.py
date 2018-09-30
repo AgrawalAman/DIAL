@@ -143,7 +143,9 @@ def handleMsg(userNumber, queueNumber, text):
         return
     else:
         app.logger.info("else")
-        app.logger.info(queue)        
+        app.logger.info(queue)
+        print('Hello world!', file=sys.stderr)
+        print(queue, file=sys.stderr)
         pairedUser = queue[queueNumber][0]
         removeUserFromQueue[pairedUser]
         setPair(userNumber, pairedUser)
