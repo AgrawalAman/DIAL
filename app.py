@@ -29,7 +29,7 @@ def incoming_sms():
 
 #pairs data structure
 
-userChannels{}
+userChannels={}
 
 pairs = {}
 
