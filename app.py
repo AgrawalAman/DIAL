@@ -59,7 +59,7 @@ def write(textObject):
         with open("somethingQueues.txt", 'w') as file:
                 file.write(text)
                                 
-def read(text):
+def read():
         with open("somethingQueues.txt", 'r') as file:
                 text = file.readlines()
                 result = json.loads(text)
