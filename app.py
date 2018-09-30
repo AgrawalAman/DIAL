@@ -115,6 +115,7 @@ def sendMsg(receiver, text, fromNum):
 def handleMsg(userNumber, queueNumber, text):
         
     createQueue("+13012347438", "Test", "Test Channel")
+    app.logger.info(queues)
 
     if text == "STOP":
         removeUserFromQueue(userNumber, queueNumber)
@@ -128,8 +129,6 @@ def handleMsg(userNumber, queueNumber, text):
         relayMsg(userNumber, text, queueNumber)
         return
    
-    app.logger.info(queues)
-
     elif queues[queueNumber] == []:      
         addUserToQueue(userNumber, queueNumber)
         sendMsg(userNumber, "Please wait to be paired with another user. Reply STOP to opt out of the service.", queueNumber)
