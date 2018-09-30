@@ -102,7 +102,7 @@ def handleMsg(userNumber, queueNumber, text):
         addUserToQueue(userNumber, queueNumber)
         sendMsg(userNumber, "Please wait to be paired again.", queueNumber)
         sendMsg(getPair(userNumber), "The user has disconnected. Please wait to be paired again.", queueNumber)
-    elif userNumber in user:
+    elif userNumber in userChannels:
         userChannels[userNumber] = queueNumber
         relayMsg(userNumber, text, queueNumber)
 
