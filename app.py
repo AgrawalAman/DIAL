@@ -136,7 +136,7 @@ def handleMsg(userNumber, queueNumber, text):
         return
     else:
         app.logger.info("else")      
-        pairedUser = queue[queueNumber][0]
+        pairedUser = queues[queueNumber][0]
         removeUserFromQueue[pairedUser]
         setPair(userNumber, pairedUser)
         sendMsg(pairedUser, "You have been paired, text SWITCH to switch to a new person or STOP to opt out of the service.", queueNumber)
