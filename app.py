@@ -133,14 +133,12 @@ def handleMsg(userNumber, queueNumber, text):
 
     createQueue("+13012347438", "Test", "Test Channel")
         
-    app.logger.info(queueNumber)
-    queueNumber = queueNumber[:]
     
     print("inside handler", file=sys.stderr)
     print(queues, file=sys.stderr)
 
     if text == "STOP":
-        removeUserFromQueue(userNumber, queueNumber)
+        removeUserFromQueue(userNumber, queueNumber, queues)
         sendMsg(userNumber, "Thank you for using our service. See you again!", queueNumber)
         return
     elif text == "SWITCH":
@@ -148,6 +146,7 @@ def handleMsg(userNumber, queueNumber, text):
         sendMsg(userNumber, "Please wait to be paired again.", queueNumber)
         sendMsg(getPair(userNumber), "The user has disconnected. Please wait to be paired again.", queueNumber)
         return
+
     elif userNumber in userChannels.keys():
         relayMsg(userNumber, text, queueNumber)
         return
@@ -166,7 +165,7 @@ def handleMsg(userNumber, queueNumber, text):
         pairedUser = queues[queueNumber][0]
         removeUserFromQueue(pairedUser, queueNumber, queues)
         setPair(userNumber, pairedUser)
-        sendMsg(pairedUser, "You have been paired, startb talking, or text SWITCH to switch to a new person or STOP to opt out of the service.", queueNumber)
+        sendMsg(pairedUser, "You have been paired, start talking, or text SWITCH to switch to a new person or STOP to opt out of the service.", queueNumber)
         
 if __name__ == '__main__':
     print("running")
