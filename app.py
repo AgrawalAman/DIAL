@@ -61,7 +61,7 @@ def write(text):
                                 
 def read():
         with open("somethingQueues.txt", 'r') as file:
-                text = file.readlines()
+                text = file.read()
         return text
         
 #queues data structure and handling
@@ -77,7 +77,7 @@ def getAllQueues():
     return queueInfo
 
 def createQueue(number, topic, description):
-    queues = read()
+    queues = read()  
     queues[number] = []
     write(queues)
     queueInfo = db.get('queueInfo')
@@ -97,8 +97,9 @@ def addUserToQueue(userNumber, queueNumber):
     userChannels[userNumber] = queueNumber
     queues = read()
     queues[queueNumber].append(userNumber)
-    print(queues, file=sys.stderr)
     write(queues)
+    print(read(queues), file=sys.stderr)
+    print("added" + userNumber, file=sys.stderr)
     return
 
 def removeUserFromQueue(userNumber, queueNumber):
