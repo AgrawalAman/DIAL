@@ -30,6 +30,11 @@ def homepage():
     <img src="http://loremflickr.com/600/400" />
     """.format(time=the_time)
 
+@app.route("/msgTest", methods=['GET', 'POST'])
+def incoming_sms():
+    sendMessageHelper("+12154528985","Hi Aman")
+    return str("Sent")
+
 @app.route("/sms", methods=['GET', 'POST'])
 def incoming_sms():
     """Send a dynamic reply to an incoming text message"""
@@ -58,7 +63,6 @@ def sms_send():
         
 if __name__ == '__main__':
     print("running")
-    sendMessageHelper("+12154528985","Hi Aman")
     app.run(debug=True, use_reloader=True)
         
    
