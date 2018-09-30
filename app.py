@@ -20,9 +20,7 @@ def findAndCreateNum(account_sid, auth_token, area):
     client = Client(account_sid, auth_token)
     
     #US Only
-    numbers = client.available_phone_numbers("US") 
-                    .local 
-                    .list(area_code= area)
+    numbers = client.available_phone_numbers("US").local.list(area_code= area)
     
     # Purchase the phone number
     number = client.incoming_phone_numbers 
