@@ -67,7 +67,7 @@ def read():
 #queues data structure and handling
 q = {}
 write(q)
-queue = read()
+queues = read()
 queueInfo = json.dumps({})
 db.set('queueInfo', queueInfo)
 
@@ -77,6 +77,7 @@ def getAllQueues():
     return queueInfo
 
 def createQueue(number, topic, description):
+    queues = read()
     queues[number] = []
     write(queues)
     queueInfo = db.get('queueInfo')
