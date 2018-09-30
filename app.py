@@ -54,16 +54,15 @@ def deletePair(num):
     db.set('pairs', pairs)
     return
 #helper file read write
-def write(textObject):
-        text = json.dumps(textObject)
+def write(text):
+        
         with open("somethingQueues.txt", 'w') as file:
                 file.write(text)
                                 
 def read():
         with open("somethingQueues.txt", 'r') as file:
                 text = file.readlines()
-                result = json.loads(text)
-        return result
+        return text
         
 #queues data structure and handling
 queues = {}
