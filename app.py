@@ -37,24 +37,27 @@ def incoming_sms():
 
 userChannels = db.get('userChannels') or {}
 
-pairs = db.get('pairs') or {}
+pairs = {}
+pickle.dump( pairs, open( "savePair.p", "wb" ) )
 
 def setPair(num1, num2):
+    pairs = pickle.load( open( "savePair.p", "rb" ) ) 
     pairs[num1] = num2
     pairs[num2] = num1
-    db.set('pairs', pairs)
+    pickle.dump( pairs, open( "savePair.p", "wb" ) )
     return
 
 def getPair(num):
+    pairs = pickle.load( open( "savePair.p", "rb" ) )
     result = pairs[num]
-    db.set('pairs', pairs)
     return result
 
 def deletePair(num):
+    pairs = pickle.load( open( "savePair.p", "rb" ) )
     num2 = pairs[num]
     pairs.pop(num)
     pairs.pop(num2)
-    db.set('pairs', pairs)
+    pickle.dump( pairs, open( "savePair.p", "wb" ) )
     return
         
 #queues data structure and handling
