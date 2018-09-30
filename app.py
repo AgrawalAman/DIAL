@@ -77,7 +77,7 @@ def getAllQueues():
     return queueInfo
 
 def createQueue(number, topic, description):
-    queues = read(queues)
+    queues = read()
     queues[number] = []
     write(queues)
     queueInfo = db.get('queueInfo')
@@ -88,21 +88,21 @@ def createQueue(number, topic, description):
     return
 
 def deleteQueue(number):
-    queues = read(queues)
+    queues = read()
     queues.pop(number)
     write(queues)
     return
 
 def addUserToQueue(userNumber, queueNumber):
     userChannels[userNumber] = queueNumber
-    queues = read(queues)
+    queues = read()
     queues[queueNumber].append(userNumber)
     print(queues, file=sys.stderr)
     write(queues)
     return
 
 def removeUserFromQueue(userNumber, queueNumber):
-    queues = read(queues)
+    queues = read()
     queues[queueNumber].remove(userNumber)
     print(queues, file=sys.stderr)
     write(queues)
@@ -126,7 +126,7 @@ def sendMsg(receiver, text, fromNum):
 def handleMsg(userNumber, queueNumber, text):
     app.logger.info("Msg recd" + text + " " + userNumber)
     
-    queues = read(queues)
+    queues = read()
 
     createQueue("+13012347438", "Test", "Test Channel")
         
