@@ -21,15 +21,20 @@ def homepage():
     """.format(time=the_time)
 
 @app.route("/sms", methods=['GET', 'POST'])
-def sms_reply():
-    """Respond to incoming messages with a friendly SMS."""
-    # Start our response
+def incoming_sms():
+    """Send a dynamic reply to an incoming text message"""
+    # Get the message the user sent our Twilio number
+    body = request.values.get('Body', None)
+
+    # Start our TwiML response
     resp = MessagingResponse()
 
-    # Add a message
-    resp.message("This is a reply.")
-
+    # Determine the right reply for this message
+    if body:
+        resp.message(body)
+        
     return str(resp)
+
 
 def sms_send():
     """Send messages to users."""
