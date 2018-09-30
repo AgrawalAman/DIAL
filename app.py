@@ -106,7 +106,7 @@ def handleMsg(userNumber, queueNumber, text):
     elif userNumber in userChannels:
         userChannels[userNumber] = queueNumber
         relayMsg(userNumber, text, queueNumber)
-
+        return
     elif len(queues[queueNumber]) == 0:
         userChannels[userNumber] = queueNumber
         addUserToQueue(userNumber, queueNumber)
