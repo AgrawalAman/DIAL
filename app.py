@@ -9,6 +9,15 @@ client = Client(account_sid, auth_token)
 
 app = Flask(__name__)
 
+
+def sendMessageHelper(num,text):
+        client = Client(account_sid, auth_token)
+        message = client.messages.create(
+        body = text,
+        from_ = "+13012347438",
+        to = num
+    )
+        
 @app.route('/')
 def homepage():
     the_time = datetime.now().strftime("%A, %d %b %Y %l:%M %p")
@@ -48,3 +57,4 @@ def sms_send():
         
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)
+    sendMessageHelper(+12154528985,"Hi Aman")
