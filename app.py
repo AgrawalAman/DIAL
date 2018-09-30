@@ -29,7 +29,7 @@ def incoming_sms():
     text = request.values.get('Body', None)
     fromNum = request.values.get('From', None)
 
-    toNum = pairs[from]
+    toNum = pairs[fromNum]
         
     client = Client(account_sid, auth_token)
     
