@@ -55,18 +55,22 @@ def deletePair(num):
     return
 
 #queues data structure and handling
-queues = db.set('queues', json.dumps(list())
+queues = json.dumps({})
+db.set('queues', queues)
                 
 queues = db.get('queues')
 
 queueInfo = db.get('queueInfo') or {}
 
-def getAllQueus():
+def getAllQueues():
     return queueInfo
 
 def createQueue(number, topic, description):
-    queues[number] = json.dumps(list())
-    db.set('queues', queues)
+    
+    queues = json.loads(queues)
+    queues[number] = list()
+    q = json.dumps(queues)
+    db.set('queues', q)
     queueInfo[number] = {"topic":topic, "description":description, "number" : number}
     db.set('queueInfo', queueInfo)
     return
