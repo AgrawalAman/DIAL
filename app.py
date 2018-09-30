@@ -96,12 +96,13 @@ def handleMsg(userNumber, queueNumber, text):
         userChannels[userNumber] = queueNumber
         removeUserFromQueue(userNumber, queueNumber)
         sendMsg(userNumber, "Thank you for using our service. See you again!", queueNumber)
+        return
     elif text == "SWITCH":
         userChannels[userNumber] = queueNumber
         addUserToQueue(userNumber, queueNumber)
         sendMsg(userNumber, "Please wait to be paired again.", queueNumber)
         sendMsg(getPair(userNumber), "The user has disconnected. Please wait to be paired again.", queueNumber)
-    elif userChannels[userNumber]:
+    elif userNumber in user:
         userChannels[userNumber] = queueNumber
         relayMsg(userNumber, text, queueNumber)
 
