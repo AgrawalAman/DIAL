@@ -85,7 +85,7 @@ def sendMsg(receiver, text, fromNum):
     message = client.messages.create(
         body = text,
         from_ = fromNum,
-        to = toNum
+        to = receiver
     )
 
 
