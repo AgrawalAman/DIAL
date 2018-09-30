@@ -159,7 +159,7 @@ def handleMsg(userNumber, queueNumber, text):
         addUserToQueue(userNumber, queueNumber)
         sendMsg(userNumber, "Please wait to be paired with another user. Reply STOP to opt out of the service.", queueNumber)
         return
-    else:
+    else if queues[queuenumber][0] is not None:
         print("else", file=sys.stderr)
         print(queues, file=sys.stderr)
         pairedUser = queues[queueNumber][0]
