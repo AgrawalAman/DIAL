@@ -6,6 +6,7 @@ from twilio.twiml.messaging_response import Message, MessagingResponse
 account_sid = 'AC789b798bde070df6992f4f0fba84e89a'
 auth_token = '54c50792327d057f2847007947f11cc3'
 client = Client(account_sid, auth_token)
+db=redis.from_url(os.environ['REDISCLOUD_URL'])
 
 app = Flask(__name__)
         
