@@ -30,5 +30,17 @@ def sms_reply():
 
     return str(resp)
 
+def sms_send():
+    """Send messages to users."""
+    client = Client(account_sid, auth_token)
+    
+    message = client.messages.create(
+        body = "This is a test.",
+        from_ = "+13012347438",
+        to = "+17035012119"
+    print(message.sid)
+
+sms_send()
+        
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)
