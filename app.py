@@ -55,16 +55,7 @@ def deletePair(num):
     return
 
 #queues data structure and handling
-queues = json.dumps({})
-db.set('queues', queues)
-                
-queues = db.get('queues')
-
-
-test = json.dumps({})
-db.set('test', test)
-                
-print(json.loads(db.get(test)), file=sys.stderr)
+queues = {}
 
 queueInfo = json.dumps({})
 db.set('queueInfo', queueInfo)
@@ -75,33 +66,30 @@ def getAllQueues():
     return queueInfo
 
 def createQueue(number, topic, description):
-    queues = db.get('queues')
-    queues = json.loads(queues)
-    queues["+13012347438"] = []
-    queues = json.dumps(queues)
-    db.set('queues', queues)
-    print(json.loads(db.get(queues)), file=sys.stderr)
+    queues[number] = []
+    print('queues', file=sys.stderr)
+
     queueInfo = db.get('queueInfo')
     queueInfo = json.loads(queueInfo)
     queueInfo[number] = {"topic":topic, "description":description, "number" : number}
     qI = json.dumps(queueInfo)
     db.set('queueInfo', qI)
+    
     return
 
 def deleteQueue(number):
     queues.pop(number)
-    db.set('queues', queues)
     return
 
 def addUserToQueue(userNumber, queueNumber):
     userChannels[userNumber] = queueNumber
     queues[queueNumber].append(userNumber)
-    db.set('queues', queues)        
+    print('queues', file=sys.stderr)
     return
 
 def removeUserFromQueue(userNumber, queueNumber):
     queues[queueNumber].remove(userNumber)
-    db.set('queues', queues)
+    print('queues', file=sys.stderr)
     return
 
 #relaying and handling stuff
@@ -121,13 +109,11 @@ def sendMsg(receiver, text, fromNum):
 
 def handleMsg(userNumber, queueNumber, text):
     app.logger.info("Msg recd" + text + " " + userNumber)
-    queue = db.get('queues')
-    queue = json.loads(queues)
+    
 
     createQueue("+13012347438", "Test", "Test Channel")
         
     app.logger.info(queueNumber)
-    app.logger.info(queue)
     queueNumber = queueNumber[:]
 
     if text == "STOP":
@@ -149,10 +135,7 @@ def handleMsg(userNumber, queueNumber, text):
         sendMsg(userNumber, "Please wait to be paired with another user. Reply STOP to opt out of the service.", queueNumber)
         return
     else:
-        app.logger.info("else")
-        app.logger.info(queue)
-        print('Hello world!', file=sys.stderr)
-        print(queue, file=sys.stderr)
+        app.logger.info("else")      
         pairedUser = queue[queueNumber][0]
         removeUserFromQueue[pairedUser]
         setPair(userNumber, pairedUser)
