@@ -62,7 +62,7 @@ queues = db.get('queues')
 
 queueInfo = json.dumps({})
 db.set('queueInfo', queueInfo)
-                
+print(json.loads(db.get(queues)), file=sys.stderr)
 queueInfo = db.get('queueInfo')
 
 def getAllQueues():
