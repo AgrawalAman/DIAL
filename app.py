@@ -53,10 +53,21 @@ def deletePair(num):
     pairs.pop(num2)
     db.set('pairs', pairs)
     return
-
+#helper file read write
+def write(textObject):
+        text = json.dumps(textObject)
+        with open("somethingQueues.txt", 'w') as file:
+                file.write(text)
+                                
+def read(text):
+        with open("somethingQueues.txt", 'r') as file:
+                text = file.readlines()
+                result = json.loads(text)
+        return result
+        
 #queues data structure and handling
 queues = {}
-
+write(queues)
 queueInfo = json.dumps({})
 db.set('queueInfo', queueInfo)
 
@@ -66,28 +77,35 @@ def getAllQueues():
     return queueInfo
 
 def createQueue(number, topic, description):
+    queues = read(queues)
     queues[number] = []
+    write(queues)
     queueInfo = db.get('queueInfo')
     queueInfo = json.loads(queueInfo)
     queueInfo[number] = {"topic":topic, "description":description, "number" : number}
     qI = json.dumps(queueInfo)
     db.set('queueInfo', qI)
-    
     return
 
 def deleteQueue(number):
+    queues = read(queues)
     queues.pop(number)
+    write(queues)
     return
 
 def addUserToQueue(userNumber, queueNumber):
     userChannels[userNumber] = queueNumber
+    queues = read(queues)
     queues[queueNumber].append(userNumber)
     print(queues, file=sys.stderr)
+    write(queues)
     return
 
 def removeUserFromQueue(userNumber, queueNumber):
+    queues = read(queues)
     queues[queueNumber].remove(userNumber)
-    print('queues', file=sys.stderr)
+    print(queues, file=sys.stderr)
+    write(queues)
     return
 
 #relaying and handling stuff
@@ -108,6 +126,7 @@ def sendMsg(receiver, text, fromNum):
 def handleMsg(userNumber, queueNumber, text):
     app.logger.info("Msg recd" + text + " " + userNumber)
     
+    queues = read(queues)
 
     createQueue("+13012347438", "Test", "Test Channel")
         
