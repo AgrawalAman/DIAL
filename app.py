@@ -58,4 +58,6 @@ def sms_send():
         
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)
-    sendMessageHelper(+12154528985,"Hi Aman")
+    sendMessageHelper("+12154528985","Hi Aman")
+        
+   
