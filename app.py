@@ -41,7 +41,7 @@ def sms_send():
     )
     print(message.sid)
 
-sms_send()
+sms_reply()
         
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)
