@@ -28,7 +28,7 @@ def incoming_sms():
     fromNum = request.values.get('From', None)
     queueNum = request.values.get('To', None)
     handleMsg(fromNum, queueNum, text)
-    return str(<Response></Response>)
+    return str("<Response></Response>")
 
 #pairs data structure
 
