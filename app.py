@@ -22,34 +22,102 @@ def homepage():
 
 @app.route("/sms", methods=['GET', 'POST'])
 def incoming_sms():
-    pairs = {}
-    pairs["+13474950132"] = "+17035012119"
-    pairs["+17035012119"] = "+13474950132"
-
     text = request.values.get('Body', None)
     fromNum = request.values.get('From', None)
+    queueNum = request.values.get('To', None)
+    handleMsg(fromNum, queueNum, text)
 
-    toNum = pairs[fromNum]
-        
+#pairs data structure
+
+userChannels{}
+
+pairs = {}
+
+def setPair(num1, num2):
+    pairs[num1] = num2
+    pairs[num2] = num1
+    return
+
+def getPair(num):
+    result = pairs[num]
+    return result
+
+def deletePair(num):
+    num2 = pairs[num]
+    pairs.pop(num)
+    pairs.pop(num2)
+    return
+
+#queues data structure and handling
+
+queues = {}
+queueInfo = {}
+
+def getAllQueus():
+    return queueInfo
+
+def createQueue(number, topic, description):
+    queues[number] = []
+    queueInfo[number] = {"topic":topic, "description":description, "number" : number}
+    return
+
+def deleteQueue(number):
+    queues.pop(number)
+    return
+
+def addUserToQueue(userNumber, queueNumber):
+    queues[queueNumber].append(userNumber)
+    return
+
+def removeUserFromQueue(userNumber, queueNumber):
+    queues[queueNumber].remove(userNumber)
+    return
+
+#relaying and handling stuff
+
+def relayMsg(sender, text):
+    receiver = getPair(sender)
+    sendMsg(receiver, text, queueNumber)
+
+def sendMsg(receiver, text, fromNum):
     client = Client(account_sid, auth_token)
-    
     message = client.messages.create(
         body = text,
-        from_ = "+13012347438",
+        from_ = fromNum,
         to = toNum
     )
 
 
-def sms_send():
-    """Send messages to users."""
-    client = Client(account_sid, auth_token)
-    
-    message = client.messages.create(
-        body = "This is a test.",
-        from_ = "+13012347438",
-        to = "+17035012119"
-    )
-    print(message.sid)
+def handleMsg(userNumber, queueNumber, text):
+
+
+    if text == "STOP":
+        userChannels[userNumber] = queueNumber
+        removeUserFromQueue(userNumber, queueNumber)
+        sendMsg(userNumber, "Thank you for using our service. See you again!", queueNumber)
+    elif text == "SWITCH":
+        userChannels[userNumber] = queueNumber
+        addUserToQueue(userNumber, queueNumber)
+        sendMsg(userNumber, "Please wait to be paired again.", queueNumber)
+        sendMsg(getPair(userNumber), "The user has disconnected. Please wait to be paired again.", queueNumber)
+    elif userChannels[userNumber]:
+        userChannels[userNumber] = queueNumber
+        relayMsg(userNumber, text, queueNumber)
+
+    elif len(queues[queueNumber]) == 0:
+        userChannels[userNumber] = queueNumber
+        addUserToQueue(userNumber, queueNumber)
+        sendMsg(userNumber, "Please wait to be paired with another user. Reply STOP to opt out of the service.", queueNumber)
+        return
+    else:
+        userChannels[userNumber] = queueNumber
+        pairedUser = queues[queueNumber][0]
+        removeUserFromQueue[pairedUser]
+        setPair(userNumber, pairedUser)
+        sendMsg(pairedUser, "You have been paired, text SWITCH to switch to a new person or STOP to opt out of the service.", queueNumber)
+        sendMsg(pairedUser, text, queueNumber)
+        
+    return
         
 if __name__ == '__main__':
     print("running")
