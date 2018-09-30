@@ -22,9 +22,8 @@ def findAndCreateNum(area):
         client = Client(account_sid, auth_token)
         numbers = client.available_phone_numbers("US").local.list(area_code= area)
         number = client.incoming_phone_numbers.create(phone_number=numbers[0].phone_number).update(acc_sid = account_sid sms_url = "https://testprojectdial.herokuapp.com/sms")
-    
-    print(number.friendly_name)
-    return number
+        print(number.friendly_name)
+        return number
 
 @app.route("/sms", methods=['GET', 'POST'])
 def incoming_sms():
