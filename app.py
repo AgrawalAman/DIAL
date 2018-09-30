@@ -151,7 +151,7 @@ def handleMsg(userNumber, queueNumber, text):
         relayMsg(userNumber, text, queueNumber)
         return
    
-    elif len(queues[questionnumber]) == 0:
+    elif len(queues[queueNumber]) == 0:
         print("elif", file=sys.stderr)
         queues = pickle.load( open( "save.p", "rb" ) )
         print(queues, file=sys.stderr)
