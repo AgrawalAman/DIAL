@@ -13,14 +13,27 @@ app = Flask(__name__)
         
 @app.route('/')
 def homepage():
-    the_time = datetime.now().strftime("%A, %d %b %Y %l:%M %p")
+    return app.send_static_file('index.html')
 
-    return """
-    <h1>Hello heroku</h1>
-    <p>It is currently {time}.</p>
-
-    <img src="http://loremflickr.com/600/400" />
-    """.format(time=the_time)
+@app.route('/getNum/<area>')
+def findAndCreateNum(account_sid, auth_token, area):        
+    client = Client(account_sid, auth_token)
+    
+    #US Only
+    numbers = client.available_phone_numbers("US") 
+                    .local 
+                    .list(area_code= area)
+    
+    # Purchase the phone number
+    number = client.incoming_phone_numbers 
+                   .create(phone_number=numbers[0].phone_number)
+                   .update(
+                        acc_sid = account_sid
+                        sms_url = "https://testprojectdial.herokuapp.com/sms"
+                   )
+    
+    print(number.friendly_name)
+    return number
 
 @app.route("/sms", methods=['GET', 'POST'])
 def incoming_sms():
@@ -147,7 +160,7 @@ def handleMsg(userNumber, queueNumber, text):
         app.logger.info("else")  
         print(queues, file=sys.stderr)
         pairedUser = queues[queueNumber][0]
-        removeUserFromQueue[pairedUser]
+        removeUserFromQueue(pairedUser)
         setPair(userNumber, pairedUser)
         sendMsg(pairedUser, "You have been paired, text SWITCH to switch to a new person or STOP to opt out of the service.", queueNumber)
         sendMsg(pairedUser, text, queueNumber)
