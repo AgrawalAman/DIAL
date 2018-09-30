@@ -22,16 +22,21 @@ def homepage():
 
 @app.route("/sms", methods=['GET', 'POST'])
 def incoming_sms():
-        
+    pairs = {}
+    pairs["+13474950132"] = "+17035012119"
+    pairs["+17035012119"] = "+13474950132"
+
     text = request.values.get('Body', None)
-    num = "+17035012119"
+    fromNum = request.values.get('From', None)
+
+    toNum = pairs[from]
         
     client = Client(account_sid, auth_token)
     
     message = client.messages.create(
         body = text,
         from_ = "+13012347438",
-        to = num
+        to = toNum
     )
 
 
