@@ -38,6 +38,7 @@ def sms_send():
         body = "This is a test.",
         from_ = "+13012347438",
         to = "+17035012119"
+    )
     print(message.sid)
 
 sms_send()
