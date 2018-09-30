@@ -95,6 +95,9 @@ def addUserToQueue(userNumber, queueNumber):
 
 def removeUserFromQueue(userNumber, queueNumber):
         queues = pickle.load( open( "save.p", "rb" ) )
+        print("removing" + userNumber, file=sys.stderr)
+        print(queues, file=sys.stderr)
+        print("removed" + userNumber, file=sys.stderr)
         qlist = queues[queueNumber]
         qlist.remove(userNumber)
         print(queues, file=sys.stderr)
