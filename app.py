@@ -35,7 +35,8 @@ def incoming_sms():
 
 #pairs data structure
 
-userChannels = db.get('userChannels') or {}
+userChannels = {}
+pickle.dump( userChannels, open( "saveChannel.p", "wb" ) )
 
 pairs = {}
 pickle.dump( pairs, open( "savePair.p", "wb" ) )
@@ -89,10 +90,12 @@ def deleteQueue(number):
     return
 
 def addUserToQueue(userNumber, queueNumber):
+    userChannels = pickle.load( open( "saveChannel.p", "rb" ) )
     userChannels[userNumber] = queueNumber
     queues = pickle.load( open( "save.p", "rb" ) )
     queues[queueNumber].append(userNumber)
-    pickle.dump( queues, open( "save.p", "wb" ) )    
+    pickle.dump( queues, open( "save.p", "wb" ) ) 
+    pickle.dump( userChannels, open( "saveChannel.p", "wb" ) ) 
     print("added" + userNumber, file=sys.stderr)
     return
 
