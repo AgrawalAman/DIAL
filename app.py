@@ -71,7 +71,7 @@ def getAllQueues():
 def createQueue(number, topic, description):
     queues = db.get('queues')
     queues = json.loads(queues)
-    queues[number] = list()
+    queues[number] = []
     queues = json.dumps(queues)
     db.set('queues', queues)
     queueInfo = db.get('queueInfo')
