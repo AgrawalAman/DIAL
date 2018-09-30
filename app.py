@@ -30,8 +30,7 @@ def incoming_sms():
     resp = MessagingResponse()
 
     # Determine the right reply for this message
-    if body:
-        resp.message(body)
+    resp.message(body)
         
     return str(resp)
 
