@@ -130,7 +130,7 @@ def handleMsg(userNumber, queueNumber, text):
         relayMsg(userNumber, text, queueNumber)
         return
    
-    elif queues[queueNumber] is not None:
+    elif queues is None:
         #todo bug probably
         addUserToQueue(userNumber, queueNumber)
         sendMsg(userNumber, "Please wait to be paired with another user. Reply STOP to opt out of the service.", queueNumber)
