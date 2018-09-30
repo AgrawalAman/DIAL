@@ -93,8 +93,7 @@ def addUserToQueue(userNumber, queueNumber):
     print("added" + userNumber, file=sys.stderr)
     return
 
-def removeUserFromQueue(userNumber, queueNumber):
-        queues = pickle.load( open( "save.p", "rb" ) )
+def removeUserFromQueue(userNumber, queueNumber, queues):
         print("removing" + userNumber, file=sys.stderr)
         print(queues, file=sys.stderr)
         qlist = queues[queueNumber]
@@ -158,7 +157,7 @@ def handleMsg(userNumber, queueNumber, text):
         print("else", file=sys.stderr)
         print(queues, file=sys.stderr)
         pairedUser = queues[queueNumber][0]
-        removeUserFromQueue(pairedUser, queueNumber)
+        removeUserFromQueue(pairedUser, queueNumber, queues)
         setPair(userNumber, pairedUser)
         sendMsg(pairedUser, "You have been paired, text SWITCH to switch to a new person or STOP to opt out of the service.", queueNumber)
         sendMsg(pairedUser, text, queueNumber)
