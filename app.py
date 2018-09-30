@@ -67,6 +67,7 @@ def deleteQueue(number):
     return
 
 def addUserToQueue(userNumber, queueNumber):
+    userChannels[userNumber] = queueNumber
     queues[queueNumber].append(userNumber)
     return
 
@@ -94,33 +95,27 @@ def handleMsg(userNumber, queueNumber, text):
     createQueue("+13012347438", "Test", "Test Channel")
 
     if text == "STOP":
-        userChannels[userNumber] = queueNumber
         removeUserFromQueue(userNumber, queueNumber)
         sendMsg(userNumber, "Thank you for using our service. See you again!", queueNumber)
         return
     elif text == "SWITCH":
-        userChannels[userNumber] = queueNumber
         addUserToQueue(userNumber, queueNumber)
         sendMsg(userNumber, "Please wait to be paired again.", queueNumber)
         sendMsg(getPair(userNumber), "The user has disconnected. Please wait to be paired again.", queueNumber)
     elif userNumber in userChannels:
-        userChannels[userNumber] = queueNumber
         relayMsg(userNumber, text, queueNumber)
         return
-    elif len(queues[queueNumber]) == 0:
-        userChannels[userNumber] = queueNumber
+    elif len(queues[queueNumber]) == 0:      
         addUserToQueue(userNumber, queueNumber)
         sendMsg(userNumber, "Please wait to be paired with another user. Reply STOP to opt out of the service.", queueNumber)
         return
     else:
-        userChannels[userNumber] = queueNumber
         pairedUser = queues[queueNumber][0]
         removeUserFromQueue[pairedUser]
         setPair(userNumber, pairedUser)
         sendMsg(pairedUser, "You have been paired, text SWITCH to switch to a new person or STOP to opt out of the service.", queueNumber)
         sendMsg(pairedUser, text, queueNumber)
-        
-    return
+    return "done"
         
 if __name__ == '__main__':
     print("running")
