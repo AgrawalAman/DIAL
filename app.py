@@ -114,6 +114,9 @@ def sendMsg(receiver, text, fromNum):
 
 def handleMsg(userNumber, queueNumber, text):
     app.logger.info("Msg recd" + text + " " + userNumber)
+    queue = db.get('queue')
+    queue = json.loads(queue)
+
     createQueue("+13012347438", "Test", "Test Channel")
     app.logger.info(queueNumber)
     app.logger.info(queue)
