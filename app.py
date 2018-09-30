@@ -72,8 +72,8 @@ def createQueue(number, topic, description):
     queues = db.get('queues')
     queues = json.loads(queues)
     queues[number] = list()
-    q = json.dumps(queues)
-    db.set('queues', q)
+    queues = json.dumps(queues)
+    db.set('queues', queues)
     queueInfo = db.get('queueInfo')
     queueInfo = json.loads(queueInfo)
     queueInfo[number] = {"topic":topic, "description":description, "number" : number}
@@ -118,6 +118,7 @@ def handleMsg(userNumber, queueNumber, text):
     queue = json.loads(queues)
 
     createQueue("+13012347438", "Test", "Test Channel")
+        
     app.logger.info(queueNumber)
     app.logger.info(queue)
     queueNumber = queueNumber[:]
@@ -130,11 +131,12 @@ def handleMsg(userNumber, queueNumber, text):
         addUserToQueue(userNumber, queueNumber)
         sendMsg(userNumber, "Please wait to be paired again.", queueNumber)
         sendMsg(getPair(userNumber), "The user has disconnected. Please wait to be paired again.", queueNumber)
+        return
     elif userNumber in userChannels:
         relayMsg(userNumber, text, queueNumber)
         return
    
-    elif queue == "":
+    elif queue is None:
         #todo bug probably
         addUserToQueue(userNumber, queueNumber)
         sendMsg(userNumber, "Please wait to be paired with another user. Reply STOP to opt out of the service.", queueNumber)
