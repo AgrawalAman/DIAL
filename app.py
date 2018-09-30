@@ -67,7 +67,7 @@ def getAllQueues():
 
 def createQueue(number, topic, description):
     queues[number] = []
-    print('queues', file=sys.stderr)
+    print(queues, file=sys.stderr)
 
     queueInfo = db.get('queueInfo')
     queueInfo = json.loads(queueInfo)
@@ -135,7 +135,8 @@ def handleMsg(userNumber, queueNumber, text):
         sendMsg(userNumber, "Please wait to be paired with another user. Reply STOP to opt out of the service.", queueNumber)
         return
     else:
-        app.logger.info("else")      
+        app.logger.info("else")  
+        print(queues, file=sys.stderr)
         pairedUser = queues[queueNumber][0]
         removeUserFromQueue[pairedUser]
         setPair(userNumber, pairedUser)
