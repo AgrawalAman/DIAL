@@ -60,7 +60,10 @@ db.set('queues', queues)
                 
 queues = db.get('queues')
 
-queueInfo = db.get('queueInfo') or {}
+queueInfo = json.dumps({})
+db.set('queueInfo', queueInfo)
+                
+queueInfo = db.get('queueInfo')
 
 def getAllQueues():
     return queueInfo
@@ -71,8 +74,11 @@ def createQueue(number, topic, description):
     queues[number] = list()
     q = json.dumps(queues)
     db.set('queues', q)
+    queueInfo = db.get('queueInfo')
+    queueInfo = json.loads(queueInfo)
     queueInfo[number] = {"topic":topic, "description":description, "number" : number}
-    db.set('queueInfo', queueInfo)
+    qI = json.dumps(queueInfo)
+    db.set('queueInfo', qI)
     return
 
 def deleteQueue(number):
