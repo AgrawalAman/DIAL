@@ -29,50 +29,58 @@ def incoming_sms():
 
 #pairs data structure
 
-userChannels={}
+userChannels = db.get('userChannels') or {}
 
-pairs = {}
+pairs = db.get('pairs') or {}
 
 def setPair(num1, num2):
     pairs[num1] = num2
     pairs[num2] = num1
+    db.set('pairs', pairs)
     return
 
 def getPair(num):
     result = pairs[num]
+    db.set('pairs', pairs)
     return result
 
 def deletePair(num):
     num2 = pairs[num]
     pairs.pop(num)
     pairs.pop(num2)
+    db.set('pairs', pairs)
     return
 
 #queues data structure and handling
 
-queues = {}
+queues = db.get('queues') or {}
 
-queueInfo = {}
+queueInfo = db.get('queueInfo') or {}
 
 def getAllQueus():
     return queueInfo
 
 def createQueue(number, topic, description):
     queues[number] = []
+    db.set('queues', queues)
     queueInfo[number] = {"topic":topic, "description":description, "number" : number}
+    db.set('queueInfo', queueInfo)
     return
 
 def deleteQueue(number):
     queues.pop(number)
+    db.set('queues', queues)
     return
 
 def addUserToQueue(userNumber, queueNumber):
     userChannels[userNumber] = queueNumber
     queues[queueNumber].append(userNumber)
+    db.set('queues', queues)        
     return
 
 def removeUserFromQueue(userNumber, queueNumber):
     queues[queueNumber].remove(userNumber)
+    db.set('queues', queues)
     return
 
 #relaying and handling stuff
