@@ -152,8 +152,6 @@ def handleMsg(userNumber, queueNumber, text):
         return
     else:
         print("else", file=sys.stderr)
-        queues = pickle.load( open( "save.p", "rb" ) )
-
         print(queues, file=sys.stderr)
         pairedUser = queues[queueNumber][0]
         removeUserFromQueue(pairedUser, queueNumber)
