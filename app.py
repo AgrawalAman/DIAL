@@ -40,8 +40,6 @@ def sms_send():
         to = "+17035012119"
     )
     print(message.sid)
-
-sms_reply()
         
 if __name__ == '__main__':
     app.run(debug=True, use_reloader=True)
