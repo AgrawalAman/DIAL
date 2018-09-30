@@ -95,7 +95,8 @@ def addUserToQueue(userNumber, queueNumber):
 
 def removeUserFromQueue(userNumber, queueNumber):
         queues = pickle.load( open( "save.p", "rb" ) )
-        queues[queueNumber].remove(userNumber)
+        qlist = queues[queueNumber]
+        qlist.remove(userNumber)
         print(queues, file=sys.stderr)
         pickle.dump( queues, open( "save.p", "wb" ) )
         return
@@ -142,12 +143,17 @@ def handleMsg(userNumber, queueNumber, text):
         return
    
     elif len(queues) == 0:
-        #todo bug probably
+        print("elif", file=sys.stderr)
+        queues = pickle.load( open( "save.p", "rb" ) )
+        print(queues, file=sys.stderr)
+        
         addUserToQueue(userNumber, queueNumber)
         sendMsg(userNumber, "Please wait to be paired with another user. Reply STOP to opt out of the service.", queueNumber)
         return
     else:
-        app.logger.info("else")  
+        print("else", file=sys.stderr)
+        queues = pickle.load( open( "save.p", "rb" ) )
+
         print(queues, file=sys.stderr)
         pairedUser = queues[queueNumber][0]
         removeUserFromQueue(pairedUser, queueNumber)
