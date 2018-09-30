@@ -2,6 +2,7 @@ from twilio.rest import Client
 from flask import Flask, request, redirect
 from datetime import datetime
 from twilio.twiml.messaging_response import Message, MessagingResponse
+import os, redis
 
 account_sid = 'AC789b798bde070df6992f4f0fba84e89a'
 auth_token = '54c50792327d057f2847007947f11cc3'
