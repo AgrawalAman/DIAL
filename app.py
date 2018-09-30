@@ -115,7 +115,6 @@ def handleMsg(userNumber, queueNumber, text):
         setPair(userNumber, pairedUser)
         sendMsg(pairedUser, "You have been paired, text SWITCH to switch to a new person or STOP to opt out of the service.", queueNumber)
         sendMsg(pairedUser, text, queueNumber)
-    return
         
 if __name__ == '__main__':
     print("running")
