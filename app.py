@@ -16,19 +16,12 @@ def homepage():
     return app.send_static_file('index.html')
 
 @app.route('/getNum/<area>')
-def findAndCreateNum(account_sid, auth_token, area):        
-    client = Client(account_sid, auth_token)
-    
-    #US Only
-    numbers = client.available_phone_numbers("US").local.list(area_code= area)
-    
-    # Purchase the phone number
-    number = client.incoming_phone_numbers 
-                   .create(phone_number=numbers[0].phone_number)
-                   .update(
-                        acc_sid = account_sid
-                        sms_url = "https://testprojectdial.herokuapp.com/sms"
-                   )
+def findAndCreateNum(area):
+        account_sid = 'AC789b798bde070df6992f4f0fba84e89a'
+        auth_token = '54c50792327d057f2847007947f11cc3'
+        client = Client(account_sid, auth_token)
+        numbers = client.available_phone_numbers("US").local.list(area_code= area)
+        number = client.incoming_phone_numbers.create(phone_number=numbers[0].phone_number).update(acc_sid = account_sid sms_url = "https://testprojectdial.herokuapp.com/sms")
     
     print(number.friendly_name)
     return number
