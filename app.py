@@ -149,7 +149,7 @@ def handleMsg(userNumber, queueNumber, text):
         relayMsg(userNumber, text, queueNumber)
         return
    
-    elif len(json.loads(queues[queueNumber])) == 0:
+    elif len(queues) == 0:
         #todo bug probably
         addUserToQueue(userNumber, queueNumber)
         sendMsg(userNumber, "Please wait to be paired with another user. Reply STOP to opt out of the service.", queueNumber)
