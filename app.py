@@ -29,9 +29,6 @@ def sms_reply():
     # Add a message
     resp.message("This is a reply.")
 
-    print(response)
-
-
     return str(resp)
 
 def sms_send():
