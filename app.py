@@ -1,6 +1,7 @@
 from twilio.rest import Client
 from flask import Flask
 from datetime import datetime
+from twilio.twiml.messaging_response import Message, MessagingResponse
 
 account_sid = 'AC789b798bde070df6992f4f0fba84e89a'
 auth_token = '54c50792327d057f2847007947f11cc3'
@@ -27,6 +28,9 @@ def sms_reply():
 
     # Add a message
     resp.message("This is a reply.")
+
+    print(response)
+
 
     return str(resp)
 
