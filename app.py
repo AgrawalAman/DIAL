@@ -77,7 +77,7 @@ def removeUserFromQueue(userNumber, queueNumber):
 
 #relaying and handling stuff
 
-def relayMsg(sender, text):
+def relayMsg(sender, text, queueNumber):
     receiver = getPair(sender)
     sendMsg(receiver, text, queueNumber)
 
