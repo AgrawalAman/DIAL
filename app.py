@@ -20,6 +20,8 @@ def homepage():
     <img src="http://loremflickr.com/600/400" />
     """.format(time=the_time)
 
+"""
+old
 @app.route("/sms", methods=['GET', 'POST'])
 def incoming_sms():
     """Send a dynamic reply to an incoming text message"""
@@ -33,6 +35,21 @@ def incoming_sms():
     resp.message(str(body))
         
     return str(resp)
+"""
+
+@app.route("/sms", methods=['GET', 'POST'])
+def incoming_sms():
+        
+    text = request.values.get('Body', None)
+    num = "+12154528985"
+        
+    client = Client(account_sid, auth_token)
+    
+    message = client.messages.create(
+        body = text",
+        from_ = "+13012347438",
+        to = num
+    )
 
 
 def sms_send():
