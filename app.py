@@ -13,7 +13,7 @@ app = Flask(__name__)
         
 @app.route('/')
 def homepage():
-    return app.send_static_file('index.html')
+    return app.send_static_file('/index.html')
 
 @app.route('/getNum/<area>')
 def findAndCreateNum(area):
