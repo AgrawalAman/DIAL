@@ -67,8 +67,6 @@ def getAllQueues():
 
 def createQueue(number, topic, description):
     queues[number] = []
-    print(queues, file=sys.stderr)
-
     queueInfo = db.get('queueInfo')
     queueInfo = json.loads(queueInfo)
     queueInfo[number] = {"topic":topic, "description":description, "number" : number}
@@ -84,7 +82,7 @@ def deleteQueue(number):
 def addUserToQueue(userNumber, queueNumber):
     userChannels[userNumber] = queueNumber
     queues[queueNumber].append(userNumber)
-    print('queues', file=sys.stderr)
+    print(queues, file=sys.stderr)
     return
 
 def removeUserFromQueue(userNumber, queueNumber):
