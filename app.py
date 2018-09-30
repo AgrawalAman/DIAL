@@ -115,7 +115,8 @@ def sendMsg(receiver, text, fromNum):
 def handleMsg(userNumber, queueNumber, text):
         
     createQueue("+13012347438", "Test", "Test Channel")
-    app.logger.info(queues)
+    app.logger.info(queueNumber)
+    queueNumber = queueNumber[:]
 
     if text == "STOP":
         removeUserFromQueue(userNumber, queueNumber)
