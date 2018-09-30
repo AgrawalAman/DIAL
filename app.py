@@ -55,6 +55,7 @@ def deletePair(num):
     return
 
 #queues data structure and handling
+db.set('queues',{})
 
 queues = db.get('queues') or {}
 
