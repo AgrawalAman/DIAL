@@ -151,14 +151,6 @@ def handleMsg(userNumber, queueNumber, text):
         relayMsg(userNumber, text, queueNumber)
         return
    
-    elif len(queues[queueNumber]) == 0:
-        print("elif", file=sys.stderr)
-        queues = pickle.load( open( "save.p", "rb" ) )
-        print(queues, file=sys.stderr)
-        
-        addUserToQueue(userNumber, queueNumber)
-        sendMsg(userNumber, "Please wait to be paired with another user. Reply STOP to opt out of the service.", queueNumber)
-        return
     elif queues[queuenumber][0] is not None:
         print("else", file=sys.stderr)
         print(queues, file=sys.stderr)
@@ -166,7 +158,15 @@ def handleMsg(userNumber, queueNumber, text):
         removeUserFromQueue(pairedUser, queueNumber, queues)
         setPair(userNumber, pairedUser)
         sendMsg(pairedUser, "You have been paired, start talking, or text SWITCH to switch to a new person or BYE to opt out of the service.", queueNumber)
+     
+    else:
+        print("elif", file=sys.stderr)
+        queues = pickle.load( open( "save.p", "rb" ) )
+        print(queues, file=sys.stderr)
         
+        addUserToQueue(userNumber, queueNumber)
+        sendMsg(userNumber, "Please wait to be paired with another user. Reply STOP to opt out of the service.", queueNumber)
+        return
 if __name__ == '__main__':
     print("running")
     app.run(debug=True, use_reloader=True)
