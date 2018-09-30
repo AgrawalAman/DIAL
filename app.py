@@ -8,16 +8,6 @@ auth_token = '54c50792327d057f2847007947f11cc3'
 client = Client(account_sid, auth_token)
 
 app = Flask(__name__)
-
-
-def sendMessageHelper(num,text):
-        client = Client(account_sid, auth_token)
-        message = client.messages.create(
-        body = text,
-        from_ = "+13012347438",
-        to = num
-    )
-        print("Sent")
         
 @app.route('/')
 def homepage():
@@ -29,11 +19,6 @@ def homepage():
 
     <img src="http://loremflickr.com/600/400" />
     """.format(time=the_time)
-
-@app.route("/msgTest", methods=['GET', 'POST'])
-def incoming_sms():
-    sendMessageHelper("+12154528985","Hi Aman")
-    return str("Sent")
 
 @app.route("/sms", methods=['GET', 'POST'])
 def incoming_sms():
