@@ -17,6 +17,7 @@ def sendMessageHelper(num,text):
         from_ = "+13012347438",
         to = num
     )
+        print("Sent")
         
 @app.route('/')
 def homepage():
