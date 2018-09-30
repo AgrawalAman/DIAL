@@ -29,7 +29,7 @@ def incoming_sms():
     client = Client(account_sid, auth_token)
     
     message = client.messages.create(
-        body = text",
+        body = text,
         from_ = "+13012347438",
         to = num
     )
