@@ -127,7 +127,7 @@ def handleMsg(userNumber, queueNumber, text):
     elif userNumber in userChannels:
         relayMsg(userNumber, text, queueNumber)
         return
-    elif len(queues[queueNumber]) == 0:      
+    elif queues[queueNumber] == []:      
         addUserToQueue(userNumber, queueNumber)
         sendMsg(userNumber, "Please wait to be paired with another user. Reply STOP to opt out of the service.", queueNumber)
         return
