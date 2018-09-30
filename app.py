@@ -51,6 +51,7 @@ def deletePair(num):
 #queues data structure and handling
 
 queues = {}
+
 queueInfo = {}
 
 def getAllQueus():
@@ -121,6 +122,7 @@ def handleMsg(userNumber, queueNumber, text):
         
 if __name__ == '__main__':
     print("running")
+    createQueue("+13012347438", "Test", "Test Channel")
     app.run(debug=True, use_reloader=True)
         
    
