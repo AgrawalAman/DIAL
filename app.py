@@ -127,7 +127,8 @@ def sendMsg(receiver, text, fromNum):
 
 def handleMsg(userNumber, queueNumber, text):
     app.logger.info("Msg recd" + text + " " + userNumber)
-    
+    userChannels = pickle.load( open( "saveChannel.p", "rb" ) )
+
     queues = pickle.load( open( "save.p", "rb" ) )
 
     createQueue("+13012347438", "Test", "Test Channel")
@@ -165,8 +166,7 @@ def handleMsg(userNumber, queueNumber, text):
         pairedUser = queues[queueNumber][0]
         removeUserFromQueue(pairedUser, queueNumber, queues)
         setPair(userNumber, pairedUser)
-        sendMsg(pairedUser, "You have been paired, text SWITCH to switch to a new person or STOP to opt out of the service.", queueNumber)
-        sendMsg(pairedUser, text, queueNumber)
+        sendMsg(pairedUser, "You have been paired, startb talking, or text SWITCH to switch to a new person or STOP to opt out of the service.", queueNumber)
         
 if __name__ == '__main__':
     print("running")
