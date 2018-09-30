@@ -55,7 +55,7 @@ def deletePair(num):
     return
 #helper file read write
 def write(text):
-        with open("somethingQueues.txt", 'w') as file
+        with open("somethingQueues.txt", 'w') as file:
         file.write(str(text))
                                 
 def read():
