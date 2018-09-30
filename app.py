@@ -24,7 +24,7 @@ def homepage():
 def incoming_sms():
         
     text = request.values.get('Body', None)
-    num = "+12154528985"
+    num = "+17035012119"
         
     client = Client(account_sid, auth_token)
     
